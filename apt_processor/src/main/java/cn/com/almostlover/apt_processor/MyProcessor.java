@@ -2,6 +2,7 @@ package cn.com.almostlover.apt_processor;
 
 import cn.com.almostlover.apt_annotation.TestAnnotation;
 import com.google.auto.service.AutoService;
+import com.google.common.collect.ImmutableSet;
 
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
@@ -11,8 +12,6 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 
@@ -34,6 +33,7 @@ public class MyProcessor extends AbstractProcessor {
         elementUtils = processingEnv.getElementUtils();//获取元素的工具类
         typeUtils = processingEnv.getTypeUtils();//这个我不记得了
         messager.printMessage(Diagnostic.Kind.NOTE, "processing1111...");
+        messager.printMessage(Diagnostic.Kind.ERROR, "processing1111...");
     }
 
     @Override
@@ -69,14 +69,12 @@ public class MyProcessor extends AbstractProcessor {
         }
 
 
-        return false;
+        return true;
     }
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {
-        HashSet<String> supportTypes = new LinkedHashSet<>();
-        supportTypes.add(TestAnnotation.class.getCanonicalName());
-        return supportTypes;
+        return  ImmutableSet.of(TestAnnotation.class.getName());
     }
 
     @Override
