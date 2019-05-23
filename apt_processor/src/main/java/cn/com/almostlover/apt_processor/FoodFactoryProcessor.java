@@ -3,10 +3,7 @@ package cn.com.almostlover.apt_processor;
 import cn.com.almostlover.apt_annotation.Food;
 import com.google.auto.service.AutoService;
 import com.google.common.collect.ImmutableSet;
-import com.squareup.javapoet.ClassName;
-import com.squareup.javapoet.JavaFile;
-import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.TypeSpec;
+import com.squareup.javapoet.*;
 
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
@@ -74,13 +71,6 @@ public class FoodFactoryProcessor extends AbstractProcessor {
                 } catch (MirroredTypeException mte) {
                     DeclaredType classTypeMirror = (DeclaredType) mte.getTypeMirror();
                     TypeElement classTypeElement = (TypeElement) classTypeMirror.asElement();
-                    TypeMirror superclass = classTypeElement.getSuperclass();
-                    List<? extends TypeMirror> interfaces = classTypeElement.getInterfaces();
-                    List<? extends Element> enclosedElements = classTypeElement.getEnclosedElements();
-                    Element enclosingElement = classTypeElement.getEnclosingElement();
-                    NestingKind nestingKind = classTypeElement.getNestingKind();
-                    ElementKind kind = classTypeElement.getKind();
-                    Class<? extends TypeElement> aClass = classTypeElement.getClass();
                     qualifiedSuperClassName = classTypeElement.getQualifiedName().toString(); //cn.com.almostlover.aopproject.factory.Meal
                     simpleTypeName = classTypeElement.getSimpleName().toString(); //Meal
 
@@ -103,9 +93,13 @@ public class FoodFactoryProcessor extends AbstractProcessor {
 
         }
         //通过 字符串的name 生成对应的class文件
-        ClassName returnType = ClassName.get("cn.com.almostlover.aopproject.factory","Meal");
+        ClassName className = ClassName.bestGuess(qualifiedSuperClassName);
+//        ClassName returnType = ClassName.get("cn.com.almostlover.aopproject.factory","Meal");
         method.addStatement("return null");
-        method.returns(returnType);
+        method.returns(className);
+
+
+
         TypeSpec classType = TypeSpec.classBuilder(simpleTypeName+"Factory")
                 .addModifiers(Modifier.PUBLIC)
                 .addMethod(method.build())
