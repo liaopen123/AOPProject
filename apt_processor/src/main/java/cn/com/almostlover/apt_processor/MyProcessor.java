@@ -8,7 +8,10 @@ import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.TypeKind;
+import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
@@ -33,7 +36,6 @@ public class MyProcessor extends AbstractProcessor {
         elementUtils = processingEnv.getElementUtils();//获取元素的工具类
         typeUtils = processingEnv.getTypeUtils();//这个我不记得了
         messager.printMessage(Diagnostic.Kind.NOTE, "processing1111...");
-        messager.printMessage(Diagnostic.Kind.ERROR, "processing1111...");
     }
 
     @Override
@@ -60,7 +62,10 @@ public class MyProcessor extends AbstractProcessor {
             }else if (element.getKind()==ElementKind.LOCAL_VARIABLE){
 
             }else if (element.getKind()==ElementKind.METHOD){
-
+                ExecutableElement element1 = (ExecutableElement) element;
+                TypeMirror returnType = element1.getReturnType(); //获取type mirror
+                TypeKind kind = returnType.getKind();
+                //返回的数据类型
             }else if (element.getKind()==ElementKind.PARAMETER){
 
             }
