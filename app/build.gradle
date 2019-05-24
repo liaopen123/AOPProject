@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'cn.com.almostlover.plugin'
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -20,6 +22,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
+
+    dexOptions{
+        javaMaxHeapSize "4g"
+        preDexLibraries = false
+    }
 }
 
 dependencies {
@@ -32,4 +45,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     annotationProcessor project(':apt_processor')
     implementation project(':apt_annotation')//annotationProcessor 注明是注解处理 不会把这个库打包到实际项目中
+    implementation project(':BuildSrc')//annotationProcessor 注明是注解处理 不会把这个库打包到实际项目中
 }
+
+
+

@@ -7,5 +7,6 @@ dependencies {
     implementation 'com.squareup:javapoet:1.10.0'  //帮助我们编写生成代码的。
 }
 
-sourceCompatibility = "7"
-targetCompatibility = "7"
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
